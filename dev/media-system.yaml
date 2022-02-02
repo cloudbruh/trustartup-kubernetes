@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-system
+spec:
+  selector:
+    matchLabels:
+      app: media-system
+  template:
+    metadata:
+      labels:
+        app: media-system
+    spec:
+      containers:
+      - name: media-system
+        image: trustartup.azurecr.io/mediasystem
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ConnectionStrings__Database
+          value: host=media-system-db;database=postgres;user id=postgres;password=postgres;
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-system
+spec:
+  selector:
+    app: media-system
+  ports:
+  - port: 80
+    targetPort: 80
+
