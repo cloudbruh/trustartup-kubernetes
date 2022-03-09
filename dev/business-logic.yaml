@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: business-logic
+spec:
+  selector:
+    matchLabels:
+      app: business-logic
+  template:
+    metadata:
+      labels:
+        app: business-logic
+    spec:
+      containers:
+      - name: business-logic
+        image: trustartup.azurecr.io/businesslogic
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        command: ["/bin/sh", "-c"]
+        args: ["php -S 0.0.0.0:80 -t public"]
+        env:
+          - name: APP_ENV
+            value: production
+          - name: APP_KEY
+            value: yIcTghI5UqQY6z3IjTCupEbHMYPH73gJ
+          - name: APP_DEBUG
+            value: "true"
+          - name: API_BUSINESS_CONTENT
+            value: http://business-content
+          - name: API_FEED_CONTENT
+            value: http://feed-content
+          - name: API_MEDIA
+            value: http://media-system
+          - name: API_USER
+            value: http://user-system
+          - name: API_PAYMENT
+            value: http://payment-system
+          - name: PUBLIC_KEY
+            value: |
+              -----BEGIN PUBLIC KEY-----
+              MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBsAJJ+O3fTxnPlXCleUCLG
+              leHad+0u/4P+qKoul2Sd49b6Ta/4OfK/NCGDhzCSEYSqXBIiEPEuUtKJgk8xvzBw
+              VUDOG8E1VU8NDPN1/uSUz7+1yFO4DpFQA/VgQaPXBhxO6JnpyDyHvX/4UuBs4QGh
+              VAZVhWdnJmRFcvBB98HoA2/x5Lkv78nAdT65gXWKdVe1eo+61nH5g8JwHEKJ6sPi
+              6kzPyVHI36mK0PcManhMBWQOupj1p0NWQjuphMLkJyMpeN2FiqT1GTUnOKe1M5Pb
+              jrUycVRhYZFM6wDYEMdooQR46Ie/tLXyr4k47qlI+LkxIAkkAerlF9D8uqEm7R2t
+              AgMBAAE=
+              -----END PUBLIC KEY-----
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: business-logic
+spec:
+  selector:
+    app: business-logic
+  ports:
+  - port: 80
+    targetPort: 80
