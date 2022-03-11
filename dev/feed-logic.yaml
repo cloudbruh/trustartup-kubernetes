@@ -30,6 +30,8 @@ spec:
           value: http://media-system
         - name: Settings__UserSystemUrl
           value: http://user-system
+        - name: Settings__PaymentSystemUrl
+          value: http://payment-system
         ports:
         - containerPort: 80
       imagePullSecrets:
