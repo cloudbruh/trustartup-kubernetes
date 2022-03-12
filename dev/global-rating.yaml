@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: global-rating
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 100
+      template:
+        spec:
+          containers:
+          - name: global-rating
+            image: trustartup.azurecr.io/globalrating
+            env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: Settings__FeedContentSystemUrl
+              value: http://feed-content
+            - name: Settings__RatingCalculationSystemUrl
+              value: http://rating-calculation-system
+          restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: acr-secret
