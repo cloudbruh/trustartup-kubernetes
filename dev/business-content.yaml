@@ -20,14 +20,14 @@ spec:
             memory: "128Mi"
             cpu: "500m"
         command: ["/bin/sh", "-c"]
-        args: ["php artisan migrate --force && php -S 0.0.0.0:80 -t public"]
+        args: ["php artisan migrate --force && /docker-entrypoint.sh"]
         env:
           - name: APP_ENV
             value: production
           - name: APP_KEY
             value: yIcTghI5UqQY6z3IjTCupEbHMYPH73gJ
           - name: APP_DEBUG
-            value: "true"
+            value: "false"
           - name: DB_CONNECTION
             value: pgsql
           - name: DB_HOST

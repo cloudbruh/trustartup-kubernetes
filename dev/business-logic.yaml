@@ -19,15 +19,13 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
-        command: ["/bin/sh", "-c"]
-        args: ["php -S 0.0.0.0:80 -t public"]
         env:
           - name: APP_ENV
             value: production
           - name: APP_KEY
             value: yIcTghI5UqQY6z3IjTCupEbHMYPH73gJ
           - name: APP_DEBUG
-            value: "true"
+            value: "false"
           - name: API_BUSINESS_CONTENT
             value: http://business-content
           - name: API_FEED_CONTENT
