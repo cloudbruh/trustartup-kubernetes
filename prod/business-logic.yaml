@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: business-logic
+spec:
+  selector:
+    matchLabels:
+      app: business-logic
+  template:
+    metadata:
+      labels:
+        app: business-logic
+    spec:
+      containers:
+      - name: business-logic
+        image: trustartup.azurecr.io/businesslogic
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        env:
+          - name: APP_ENV
+            value: production
+          - name: APP_KEY
+            valueFrom:
+              secretKeyRef:
+                name: business-logic-secret
+                key: apiKey
+          - name: APP_DEBUG
+            value: "false"
+          - name: API_BUSINESS_CONTENT
+            value: http://business-content
+          - name: API_FEED_CONTENT
+            value: http://feed-content
+          - name: API_MEDIA
+            value: http://media-system
+          - name: API_USER
+            value: http://user-system
+          - name: API_PAYMENT
+            value: http://payment-system
+          - name: PUBLIC_KEY
+            valueFrom:
+              secretKeyRef:
+                name: business-logic-secret
+                key: publicKey
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: business-logic
+spec:
+  selector:
+    app: business-logic
+  ports:
+  - port: 80
+    targetPort: 80

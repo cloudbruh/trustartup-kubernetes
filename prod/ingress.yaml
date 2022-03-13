@@ -1,0 +1,49 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  labels:
+    name: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/()(.*)"
+        backend:
+          service:
+            name: frontend
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: "/api/auth(/|$)(.*)"
+        backend:
+          service:
+            name: auth-system
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: "/api/business(/|$)(.*)"
+        backend:
+          service:
+            name: business-logic
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: "/api/feed(/|$)(.*)"
+        backend:
+          service:
+            name: feed-logic
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: "/api/media(/|$)(.*)"
+        backend:
+          service:
+            name: media-response
+            port: 
+              number: 80

@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-content
+spec:
+  selector:
+    matchLabels:
+      app: feed-content
+  template:
+    metadata:
+      labels:
+        app: feed-content
+    spec:
+      containers:
+      - name: feed-content
+        image: trustartup.azurecr.io/feedcontent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ConnectionStrings__Database
+          valueFrom:
+            secretKeyRef:
+              name: feed-content-secret
+              key: dbConnectionString
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-content
+spec:
+  selector:
+    app: feed-content
+  ports:
+  - port: 80
+    targetPort: 80
+

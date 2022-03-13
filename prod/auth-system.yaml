@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-system
+spec:
+  selector:
+    matchLabels:
+      app: auth-system
+  template:
+    metadata:
+      labels:
+        app: auth-system
+    spec:
+      containers:
+      - name: auth-system
+        image: trustartup.azurecr.io/authsystem
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        env:
+          - name: APP_ENV
+            value: production
+          - name: APP_KEY
+            valueFrom:
+              secretKeyRef:
+                name: auth-system-secret
+                key: apiKey
+          - name: APP_DEBUG
+            value: "false"
+          - name: API_USER
+            value: http://user-system
+          - name: PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: auth-system-secret
+                key: privateKey
+          - name: PUBLIC_KEY
+            valueFrom:
+              secretKeyRef:
+                name: auth-system-secret
+                key: publicKey
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-system
+spec:
+  selector:
+    app: auth-system
+  ports:
+  - port: 80
+    targetPort: 80

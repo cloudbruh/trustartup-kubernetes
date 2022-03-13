@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rating-calculation-system
+spec:
+  selector:
+    matchLabels:
+      app: rating-calculation-system
+  template:
+    metadata:
+      labels:
+        app: rating-calculation-system
+    spec:
+      containers:
+      - name: rating-calculation-system
+        image: trustartup.azurecr.io/ratingcalculationsystem
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rating-calculation-system
+spec:
+  selector:
+    app: rating-calculation-system
+  ports:
+  - port: 80
+    targetPort: 80
+

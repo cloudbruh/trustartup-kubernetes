@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-logic
+spec:
+  selector:
+    matchLabels:
+      app: feed-logic
+  template:
+    metadata:
+      labels:
+        app: feed-logic
+    spec:
+      containers:
+      - name: feed-logic
+        image: trustartup.azurecr.io/feedlogic
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: Authentication__JwtRsaPublicKey
+          valueFrom:
+            secretKeyRef:
+              name: feed-logic-secret
+              key: publicKey
+        - name: Settings__FeedContentSystemUrl
+          value: http://feed-content
+        - name: Settings__MediaSystemUrl
+          value: http://media-system
+        - name: Settings__UserSystemUrl
+          value: http://user-system
+        - name: Settings__PaymentSystemUrl
+          value: http://payment-system
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-logic
+spec:
+  selector:
+    app: feed-logic
+  ports:
+  - port: 80
+    targetPort: 80
+

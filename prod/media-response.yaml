@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-response
+spec:
+  selector:
+    matchLabels:
+      app: media-response
+  template:
+    metadata:
+      labels:
+        app: media-response
+    spec:
+      containers:
+      - name: media-response
+        image: trustartup.azurecr.io/mediaresponse
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: Authentication__JwtRsaPublicKey
+          valueFrom:
+            secretKeyRef:
+              name: media-response-secret
+              key: publicKey
+        - name: Settings__MediaSystemUrl
+          value: http://media-system
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-response
+spec:
+  selector:
+    app: media-response
+  ports:
+  - port: 80
+    targetPort: 80
+

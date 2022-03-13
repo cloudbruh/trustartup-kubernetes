@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-content-db
+spec:
+  selector:
+    matchLabels:
+      app: feed-content-db
+  template:
+    metadata:
+      labels:
+        app: feed-content-db
+    spec:
+      containers:
+      - name: feed-content-db
+        image: postgres:14.1-alpine
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: feed-content-db-secret
+                key: dbPassword
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: pg-data
+      volumes:
+        - name: pg-data
+          persistentVolumeClaim:
+            claimName: feed-content-db-volume
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-content-db
+spec:
+  selector:
+    app: feed-content-db
+  ports:
+  - port: 5432
+    targetPort: 5432
+

@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-system-db
+spec:
+  selector:
+    matchLabels:
+      app: media-system-db
+  template:
+    metadata:
+      labels:
+        app: media-system-db
+    spec:
+      containers:
+      - name: media-system-db
+        image: postgres:14.1-alpine
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: media-system-db-secret
+                key: dbPassword
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: pg-data
+      volumes:
+        - name: pg-data
+          persistentVolumeClaim:
+            claimName: media-system-db-volume
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-system-db
+spec:
+  selector:
+    app: media-system-db
+  ports:
+  - port: 5432
+    targetPort: 5432
+
