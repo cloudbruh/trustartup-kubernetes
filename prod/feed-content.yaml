@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: feed-content
-        image: trustartup.azurecr.io/feedcontent
+        image: trustartup.azurecr.io/feedcontent:192
         resources:
           limits:
             memory: "128Mi"

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: trustartup.azurecr.io/frontend
+        image: trustartup.azurecr.io/frontend:194
         resources:
           limits:
             memory: "128Mi"

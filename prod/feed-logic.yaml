@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: feed-logic
-        image: trustartup.azurecr.io/feedlogic
+        image: trustartup.azurecr.io/feedlogic:193
         resources:
           limits:
             memory: "128Mi"

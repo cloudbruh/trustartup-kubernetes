@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: media-system
-        image: trustartup.azurecr.io/mediasystem
+        image: trustartup.azurecr.io/mediasystem:157
         resources:
           limits:
             memory: "128Mi"

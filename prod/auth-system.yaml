@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: auth-system
-        image: trustartup.azurecr.io/authsystem
+        image: trustartup.azurecr.io/authsystem:179
         resources:
           limits:
             memory: "128Mi"

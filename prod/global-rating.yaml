@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: global-rating
-            image: trustartup.azurecr.io/globalrating
+            image: trustartup.azurecr.io/globalrating:161
             env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Production

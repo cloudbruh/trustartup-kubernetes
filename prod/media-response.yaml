@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: media-response
-        image: trustartup.azurecr.io/mediaresponse
+        image: trustartup.azurecr.io/mediaresponse:159
         resources:
           limits:
             memory: "128Mi"

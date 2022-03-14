@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: business-logic
-        image: trustartup.azurecr.io/businesslogic
+        image: trustartup.azurecr.io/businesslogic:184
         resources:
           limits:
             memory: "128Mi"

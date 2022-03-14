@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: payment-system
-        image: trustartup.azurecr.io/paymentsystem
+        image: trustartup.azurecr.io/paymentsystem:174
         resources:
           limits:
             memory: "128Mi"

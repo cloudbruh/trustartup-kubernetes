@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: rating-calculation-system
-        image: trustartup.azurecr.io/ratingcalculationsystem
+        image: trustartup.azurecr.io/ratingcalculationsystem:169
         resources:
           limits:
             memory: "128Mi"

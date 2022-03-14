@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: user-system
-        image: trustartup.azurecr.io/usersystem
+        image: trustartup.azurecr.io/usersystem:177
         resources:
           limits:
             memory: "128Mi"
