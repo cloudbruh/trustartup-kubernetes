@@ -38,8 +38,6 @@ spec:
         - name: media-data
           persistentVolumeClaim:
             claimName: media-system-volume
-      imagePullSecrets:
-      - name: acr-secret
 
 ---
 apiVersion: v1

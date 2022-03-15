@@ -49,8 +49,6 @@ spec:
               -----END PUBLIC KEY-----
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: acr-secret
 
 ---
 apiVersion: v1

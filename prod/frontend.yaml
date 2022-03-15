@@ -14,15 +14,13 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: trustartup.azurecr.io/frontend:194
+        image: trustartup.azurecr.io/frontend:199
         resources:
           limits:
             memory: "128Mi"
             cpu: "100m"
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: acr-secret
 
 ---
 apiVersion: v1

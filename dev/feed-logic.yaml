@@ -34,8 +34,6 @@ spec:
           value: http://payment-system
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: acr-secret
 
 ---
 apiVersion: v1

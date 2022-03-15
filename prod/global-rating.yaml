@@ -20,5 +20,3 @@ spec:
             - name: Settings__RatingCalculationSystemUrl
               value: http://rating-calculation-system
           restartPolicy: OnFailure
-          imagePullSecrets:
-          - name: acr-secret

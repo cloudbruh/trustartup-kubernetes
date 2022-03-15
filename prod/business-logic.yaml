@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: business-logic
-        image: trustartup.azurecr.io/businesslogic:184
+        image: trustartup.azurecr.io/businesslogic:196
         resources:
           limits:
             memory: "128Mi"
@@ -46,8 +46,6 @@ spec:
                 key: publicKey
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: acr-secret
 
 ---
 apiVersion: v1

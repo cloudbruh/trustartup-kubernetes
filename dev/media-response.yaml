@@ -28,8 +28,6 @@ spec:
           value: http://media-system
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: acr-secret
 
 ---
 apiVersion: v1

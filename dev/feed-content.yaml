@@ -26,8 +26,6 @@ spec:
           value: host=feed-content-db;database=postgres;user id=postgres;password=postgres;
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: acr-secret
 
 ---
 apiVersion: v1

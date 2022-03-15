@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: business-content
-        image: trustartup.azurecr.io/businesscontent:178
+        image: trustartup.azurecr.io/businesscontent:195
         resources:
           limits:
             memory: "128Mi"
@@ -48,8 +48,6 @@ spec:
                 key: dbPassword
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: acr-secret
 
 ---
 apiVersion: v1
